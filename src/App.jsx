@@ -13,7 +13,7 @@ const DEMO_RESULT = {
     { skill: "Python", level: "beginner", yearsExp: 1 },
     { skill: "Agile / Scrum", level: "expert", yearsExp: 4 },
     { skill: "A/B Testing", level: "intermediate", yearsExp: 2 },
-    { skill: "Stakeholder Management", level: "intermediate", yearsExp: 3 },
+    { skill: "Stakeholder Mgmt", level: "intermediate", yearsExp: 3 },
   ],
   requiredSkills: [
     { skill: "Product Strategy", importance: "critical" },
@@ -22,7 +22,6 @@ const DEMO_RESULT = {
     { skill: "SQL", importance: "important" },
     { skill: "Roadmapping Tools", importance: "important" },
     { skill: "Executive Storytelling", importance: "important" },
-    { skill: "Competitive Analysis", importance: "nice-to-have" },
   ],
   gaps: [
     { skill: "Product Strategy", importance: "critical", currentLevel: "none", targetLevel: "expert" },
@@ -32,210 +31,172 @@ const DEMO_RESULT = {
     { skill: "Roadmapping Tools", importance: "important", currentLevel: "none", targetLevel: "beginner" },
   ],
   strengths: [
-    "5 years of SQL expertise — will excel at data-driven product decisions immediately",
-    "Strong Agile background means sprint ceremonies and delivery cadences need zero ramp-up",
-    "Existing A/B testing experience maps directly to experimentation culture at the company",
-    "Figma proficiency enables direct collaboration with design without handoff friction",
+    "5 years SQL expertise — data-driven decisions from day one, no ramp-up needed",
+    "Strong Agile background means sprint ceremonies and delivery cadences are already native",
+    "A/B testing experience maps directly to the company's experimentation culture",
+    "Figma fluency enables direct design collaboration without handoff friction",
   ],
   pathway: [
     {
-      phase: 1,
-      title: "Foundation Sprint",
-      duration: "Week 1–2",
+      phase: 1, title: "Foundation Sprint", duration: "Week 1–2",
       modules: [
-        { name: "B2B SaaS Metrics Crash Course", description: "ARR, NRR, churn, LTV/CAC — understand every metric your team will reference daily.", type: "video", estimatedHours: 4, skills: ["B2B SaaS Metrics"] },
-        { name: "OKR Workshop", description: "Write your first quarter's OKRs alongside the team. Learn the company's goal-setting language.", type: "workshop", estimatedHours: 3, skills: ["OKR Frameworks"] },
-        { name: "Roadmap Tool Onboarding", description: "Get up to speed on Linear / Productboard setup, workflows, and team conventions.", type: "reading", estimatedHours: 2, skills: ["Roadmapping Tools"] },
+        { name: "B2B SaaS Metrics Crash Course", description: "ARR, NRR, churn, LTV/CAC — every metric your team references daily.", type: "video", estimatedHours: 4, skills: ["B2B SaaS Metrics"] },
+        { name: "OKR Workshop", description: "Write your first quarter's OKRs alongside the team. Learn the company goal-setting language.", type: "workshop", estimatedHours: 3, skills: ["OKR Frameworks"] },
+        { name: "Roadmap Tool Onboarding", description: "Get up to speed on Linear / Productboard workflows and team conventions.", type: "reading", estimatedHours: 2, skills: ["Roadmapping Tools"] },
       ],
     },
     {
-      phase: 2,
-      title: "Strategy & Storytelling",
-      duration: "Week 3",
+      phase: 2, title: "Strategy & Storytelling", duration: "Week 3",
       modules: [
-        { name: "Product Strategy Fundamentals", description: "Jobs-to-be-done, positioning, and how to anchor every decision to company strategy.", type: "reading", estimatedHours: 5, skills: ["Product Strategy"] },
+        { name: "Product Strategy Fundamentals", description: "Jobs-to-be-done, positioning, anchoring every decision to company strategy.", type: "reading", estimatedHours: 5, skills: ["Product Strategy"] },
         { name: "Executive Storytelling Lab", description: "Write and present a mock product review. Get feedback from your PM lead.", type: "workshop", estimatedHours: 4, skills: ["Executive Storytelling"] },
       ],
     },
     {
-      phase: 3,
-      title: "Applied Practice",
-      duration: "Week 4–5",
+      phase: 3, title: "Applied Practice", duration: "Week 4–5",
       modules: [
-        { name: "Shadow & Co-pilot Sprint", description: "Shadow a senior PM through a full sprint cycle, then co-own a feature end-to-end.", type: "project", estimatedHours: 10, skills: ["Product Strategy", "OKR Frameworks", "B2B SaaS Metrics"] },
-        { name: "30-Day Review Assessment", description: "Present your first product proposal to the leadership team for real feedback.", type: "assessment", estimatedHours: 3, skills: ["Executive Storytelling", "Product Strategy"] },
+        { name: "Shadow & Co-pilot Sprint", description: "Shadow a senior PM through a full cycle, then co-own a feature end-to-end.", type: "project", estimatedHours: 10, skills: ["Product Strategy", "OKR Frameworks"] },
+        { name: "30-Day Review Assessment", description: "Present your first product proposal to leadership for real feedback.", type: "assessment", estimatedHours: 3, skills: ["Executive Storytelling", "Product Strategy"] },
       ],
     },
   ],
 };
 
-// ── File Helpers ──────────────────────────────────────────────────────────────
+// ── Design tokens ─────────────────────────────────────────────────────────────
 
-const readFileAsText = (file) =>
-  new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = () => rej(new Error("Read failed"));
-    r.readAsText(file);
-  });
-
-const readFileAsBase64 = (file) =>
-  new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(",")[1]);
-    r.onerror = () => rej(new Error("Read failed"));
-    r.readAsDataURL(file);
-  });
-
-const fileToContentBlock = async (file, label) => {
-  const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
-  if (isPdf) {
-    const b64 = await readFileAsBase64(file);
-    return { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 }, title: label };
-  }
-  const text = await readFileAsText(file);
-  return { type: "text", text: `${label}:\n${text}` };
+const C = {
+  bg: "#0C0E12",
+  surface: "#111318",
+  surfaceHover: "#161920",
+  border: "#1E2028",
+  borderHover: "#2A2D38",
+  text: "#F1F3F5",
+  textMid: "#9CA3AF",
+  textDim: "#4B5563",
+  textFaint: "#374151",
+  accent: "#3B82F6",
+  accentBg: "#1E3A5F40",
+  accentBorder: "#3B82F630",
+  accentText: "#93C5FD",
+  green: "#22C55E",
+  greenText: "#86EFAC",
+  greenBg: "#14532D30",
+  greenBorder: "#14532D50",
+  yellow: "#FCD34D",
+  yellowText: "#FCD34D",
+  yellowBg: "#78350F30",
+  yellowBorder: "#78350F50",
+  red: "#FCA5A5",
+  redBg: "#7F1D1D30",
+  redBorder: "#7F1D1D50",
+  purple: "#C4B5FD",
+  purpleBg: "#2E1065,30",
+  purpleBorder: "#4C1D9530",
 };
 
-// ── Claude API ────────────────────────────────────────────────────────────────
+const typeStyle = {
+  video:      { color: C.accentText,  bg: C.accentBg,  border: C.accentBorder },
+  workshop:   { color: C.yellowText,  bg: C.yellowBg,  border: C.yellowBorder },
+  reading:    { color: C.textMid,     bg: C.border,    border: C.borderHover  },
+  project:    { color: C.greenText,   bg: C.greenBg,   border: C.greenBorder  },
+  assessment: { color: C.red,         bg: C.redBg,     border: C.redBorder    },
+};
 
-const ANALYSIS_SYSTEM_PROMPT = `You are an expert corporate L&D analyst. Given a resume (or quiz answers) and a job description, analyze and return ONLY valid JSON, no markdown, no backticks.
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
-JSON shape:
+const readFileAsText = (file) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsText(file); });
+const readFileAsBase64 = (file) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(",")[1]); r.onerror = rej; r.readAsDataURL(file); });
+
+const fileToBlock = async (file, label) => {
+  const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+  if (isPdf) { const b64 = await readFileAsBase64(file); return { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 }, title: label }; }
+  return { type: "text", text: `${label}:\n${await readFileAsText(file)}` };
+};
+
+const ANTHROPIC_API_KEY = import.meta?.env?.VITE_ANTHROPIC_API_KEY;
+
+const ANALYSIS_PROMPT = `You are an expert L&D analyst. Analyze the resume and job description. Return ONLY valid JSON — no markdown, no backticks, no explanation.
 {"candidateName":"string","targetRole":"string","resumeSkills":[{"skill":"string","level":"beginner|intermediate|expert","yearsExp":0}],"requiredSkills":[{"skill":"string","importance":"critical|important|nice-to-have"}],"gaps":[{"skill":"string","importance":"critical|important|nice-to-have","currentLevel":"none|beginner|intermediate","targetLevel":"intermediate|expert"}],"strengths":["string"],"pathway":[{"phase":1,"title":"string","duration":"string","modules":[{"name":"string","description":"string","type":"video|workshop|reading|project|assessment","estimatedHours":0,"skills":["string"]}]}],"timeToCompetency":"string","readinessScore":0}`;
 
-const QUIZ_SYSTEM_PROMPT = `You are an adaptive skills diagnostic engine. Given a role/JD, generate exactly 8 diagnostic questions. Return ONLY valid JSON, no markdown.
-
+const QUIZ_PROMPT = `You are an adaptive skills diagnostic engine. Given a role/JD, generate exactly 8 diagnostic questions. Return ONLY valid JSON — no markdown, no backticks.
 {"role":"string","questions":[{"id":1,"skill":"string","question":"string","options":[{"label":"string","level":"none|beginner|intermediate|expert"}]}]}`;
-
-const ANTHROPIC_API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
 
 async function callClaude(system, userContent) {
   const content = typeof userContent === "string" ? [{ type: "text", text: userContent }] : userContent;
+  const headers = { "Content-Type": "application/json" };
+  if (ANTHROPIC_API_KEY) headers["x-api-key"] = ANTHROPIC_API_KEY;
   const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...(ANTHROPIC_API_KEY && { "x-api-key": ANTHROPIC_API_KEY }) },
+    method: "POST", headers,
     body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 3000, system, messages: [{ role: "user", content }] }),
   });
   const data = await res.json();
   if (data.error) throw new Error(data.error.message);
-  const text = data.content.map((b) => b.text || "").join("");
-  return JSON.parse(text.replace(/```json|```/g, "").trim());
+  return JSON.parse(data.content.map(b => b.text || "").join("").replace(/```json|```/g, "").trim());
 }
 
-// ── Animation Hook ────────────────────────────────────────────────────────────
+// ── Shared components ─────────────────────────────────────────────────────────
 
-function useFadeIn(deps = []) {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => { setVisible(false); const t = setTimeout(() => setVisible(true), 30); return () => clearTimeout(t); }, deps);
-  return { opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(12px)", transition: "opacity 0.35s ease, transform 0.35s ease" };
-}
-
-// ── Shared Components ─────────────────────────────────────────────────────────
-
-const typeIcon = { video: "▶", workshop: "⚡", reading: "📖", project: "🛠", assessment: "✦" };
-const typeColor = { video: "#6c8ef5", workshop: "#f5c842", reading: "#6b7280", project: "#c8f542", assessment: "#f54242" };
-
-function Tag({ children, color = "#555" }) {
+function Badge({ children, color, bg, border }) {
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "3px 9px", borderRadius: "999px", border: `1px solid ${color}30`, background: `${color}0d`, fontFamily: "'Space Mono', monospace", fontSize: "10px", color, margin: "2px", letterSpacing: "0.02em" }}>
-      <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: color, flexShrink: 0 }} />{children}
+    <span style={{ display: "inline-flex", alignItems: "center", padding: "2px 7px", borderRadius: "3px", fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", fontWeight: 500, color, background: bg, border: `1px solid ${border}`, whiteSpace: "nowrap" }}>
+      {children}
     </span>
   );
 }
 
-function SkillBadge({ skill, level, importance }) {
-  const col = { expert: "#c8f542", intermediate: "#f5c842", beginner: "#6b7280", none: "#f54242" }[level]
-    || { critical: "#f54242", important: "#f5c842", "nice-to-have": "#444" }[importance] || "#444";
-  return <Tag color={col}>{skill}</Tag>;
+function ImportanceBadge({ importance }) {
+  const styles = {
+    critical:     { color: C.red,      bg: C.redBg,    border: C.redBorder    },
+    important:    { color: C.yellow,   bg: C.yellowBg, border: C.yellowBorder },
+    "nice-to-have": { color: C.textDim, bg: C.border,  border: C.borderHover  },
+  };
+  const s = styles[importance] || styles["nice-to-have"];
+  return <Badge color={s.color} bg={s.bg} border={s.border}>{importance}</Badge>;
 }
 
-function Spinner() {
+function LevelBadge({ level }) {
+  const styles = {
+    expert:       { color: C.greenText, bg: C.greenBg,  border: C.greenBorder  },
+    intermediate: { color: C.yellow,   bg: C.yellowBg,  border: C.yellowBorder },
+    beginner:     { color: C.textMid,  bg: C.border,    border: C.borderHover  },
+    none:         { color: C.textDim,  bg: C.bg,        border: C.border       },
+  };
+  const s = styles[level] || styles.none;
+  return <Badge color={s.color} bg={s.bg} border={s.border}>{level}</Badge>;
+}
+
+function TypeBadge({ type }) {
+  const s = typeStyle[type] || typeStyle.reading;
+  return <Badge color={s.color} bg={s.bg} border={s.border}>{type}</Badge>;
+}
+
+function Label({ children, style = {} }) {
+  return <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.textDim, textTransform: "uppercase", letterSpacing: "0.1em", ...style }}>{children}</div>;
+}
+
+function Divider({ style = {} }) {
+  return <div style={{ height: "1px", background: C.border, ...style }} />;
+}
+
+function Spinner({ label = "Running analysis…" }) {
   return (
-    <div style={{ display: "flex", justifyContent: "center", gap: "8px", padding: "8px 0" }}>
-      {[0, 1, 2].map((i) => (
-        <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#c8f542", animation: `pulse 1.1s ease-in-out ${i * 0.18}s infinite` }} />
-      ))}
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "80px 24px", gap: "16px" }}>
+      <div style={{ display: "flex", gap: "6px" }}>
+        {[0, 1, 2].map(i => (
+          <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.accent, animation: `dot 1.1s ease-in-out ${i * 0.18}s infinite` }} />
+        ))}
+      </div>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", color: C.textDim }}>{label}</div>
     </div>
   );
 }
 
-function ModuleCard({ mod, idx }) {
-  const col = typeColor[mod.type] || "#444";
-  return (
-    <div style={{ background: "#0a0a0a", border: "1px solid #1c1c1c", borderRadius: "10px", padding: "14px 16px", marginBottom: "8px", borderLeft: `3px solid ${col}`, animation: `fadeUp 0.3s ease ${idx * 0.05}s both` }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "5px" }}>
-        <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "13px", color: "#ddd" }}>
-          <span style={{ color: col, marginRight: "7px" }}>{typeIcon[mod.type]}</span>{mod.name}
-        </div>
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", whiteSpace: "nowrap", marginLeft: "10px" }}>{mod.estimatedHours}h</span>
-      </div>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", color: "#4a4a4a", lineHeight: 1.65, marginBottom: "8px" }}>{mod.description}</div>
-      <div>{mod.skills?.map((s) => <Tag key={s} color="#333">{s}</Tag>)}</div>
-    </div>
-  );
-}
+// ── DropZone ──────────────────────────────────────────────────────────────────
 
-function PhaseBlock({ phase, isLast, defaultOpen }) {
-  const [open, setOpen] = useState(defaultOpen);
-  const totalH = phase.modules.reduce((s, m) => s + (m.estimatedHours || 0), 0);
-  return (
-    <div style={{ display: "flex", gap: "14px", marginBottom: isLast ? 0 : "4px" }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "26px", flexShrink: 0 }}>
-        <div style={{ width: "26px", height: "26px", borderRadius: "50%", background: open ? "#c8f542" : "#1c1c1c", border: "1px solid #2a2a2a", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: open ? "#000" : "#555", fontWeight: 700, transition: "all 0.2s", flexShrink: 0 }}>{phase.phase}</div>
-        {!isLast && <div style={{ width: "1px", flex: 1, background: "#1c1c1c", marginTop: "5px" }} />}
-      </div>
-      <div style={{ flex: 1, paddingBottom: isLast ? 0 : "16px" }}>
-        <div onClick={() => setOpen(!open)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", padding: "4px 0", marginBottom: open ? "10px" : 0 }}>
-          <div>
-            <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "14px", color: "#eee" }}>{phase.title}</div>
-            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", marginTop: "2px" }}>{phase.duration} · {totalH}h · {phase.modules.length} modules</div>
-          </div>
-          <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: "#111", border: "1px solid #222", display: "flex", alignItems: "center", justifyContent: "center", transition: "transform 0.2s", transform: open ? "rotate(90deg)" : "none" }}>
-            <span style={{ color: "#444", fontSize: "10px" }}>▶</span>
-          </div>
-        </div>
-        {open && phase.modules.map((m, i) => <ModuleCard key={i} mod={m} idx={i} />)}
-      </div>
-    </div>
-  );
-}
-
-function ReadinessMeter({ score }) {
-  const [displayed, setDisplayed] = useState(0);
-  useEffect(() => { const t = setTimeout(() => setDisplayed(score), 200); return () => clearTimeout(t); }, [score]);
-  const color = score >= 70 ? "#c8f542" : score >= 40 ? "#f5c842" : "#f54242";
-  const label = score >= 70 ? "High Readiness" : score >= 40 ? "Partial Readiness" : "Needs Development";
-  const segments = 20;
-  return (
-    <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "22px 24px", marginBottom: "16px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "6px" }}>Role Readiness Score</div>
-          <div style={{ fontFamily: "'Syne', sans-serif", fontSize: "42px", fontWeight: 800, color, letterSpacing: "-0.03em", lineHeight: 1 }}>
-            {displayed}<span style={{ fontSize: "18px", color: "#2a2a2a" }}>/100</span>
-          </div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color, marginTop: "6px", letterSpacing: "0.05em" }}>{label}</div>
-        </div>
-        {/* Segmented arc-like bar */}
-        <div style={{ display: "flex", gap: "3px", alignItems: "flex-end" }}>
-          {Array.from({ length: segments }, (_, i) => {
-            const threshold = ((i + 1) / segments) * 100;
-            const filled = displayed >= threshold;
-            return <div key={i} style={{ width: "6px", height: `${14 + (i / segments) * 18}px`, borderRadius: "2px", background: filled ? color : "#1a1a1a", transition: `background 0.05s ease ${i * 0.03}s` }} />;
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Drop Zone ─────────────────────────────────────────────────────────────────
-
-function DropZone({ label, icon, file, onFile }) {
+function DropZone({ label, file, onFile }) {
   const ref = useRef();
   const [drag, setDrag] = useState(false);
-  const handle = (f) => {
+  const handle = f => {
     if (!f) return;
     if (["application/pdf", "text/plain"].includes(f.type) || f.name.endsWith(".pdf") || f.name.endsWith(".txt")) onFile(f);
   };
@@ -243,104 +204,170 @@ function DropZone({ label, icon, file, onFile }) {
   return (
     <div
       onClick={() => ref.current.click()}
-      onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
+      onDragOver={e => { e.preventDefault(); setDrag(true); }}
       onDragLeave={() => setDrag(false)}
-      onDrop={(e) => { e.preventDefault(); setDrag(false); handle(e.dataTransfer.files[0]); }}
-      style={{ flex: 1, border: `1px dashed ${drag ? "#c8f542" : file ? "#2a3a1a" : "#1e1e1e"}`, borderRadius: "10px", padding: "22px 16px", cursor: "pointer", background: drag ? "#c8f54208" : file ? "#c8f54205" : "transparent", transition: "all 0.18s", textAlign: "center" }}
+      onDrop={e => { e.preventDefault(); setDrag(false); handle(e.dataTransfer.files[0]); }}
+      style={{ flex: 1, border: `1px dashed ${drag ? C.accent : file ? C.borderHover : C.border}`, borderRadius: "7px", padding: "18px 14px", cursor: "pointer", background: drag ? `${C.accent}08` : C.surface, transition: "all 0.15s", textAlign: "center" }}
     >
-      <input ref={ref} type="file" accept=".txt,.pdf" style={{ display: "none" }} onChange={(e) => handle(e.target.files[0])} />
-      <div style={{ fontSize: "22px", marginBottom: "7px" }}>{file ? (isPdf ? "📄" : "📝") : icon}</div>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "3px" }}>{label}</div>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", color: file ? "#c8f542" : "#333" }}>{file ? file.name : "drop or click"}</div>
-      {file && isPdf && <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#6c8ef5", marginTop: "3px" }}>✦ PDF</div>}
+      <input ref={ref} type="file" accept=".txt,.pdf" style={{ display: "none" }} onChange={e => handle(e.target.files[0])} />
+      <Label style={{ marginBottom: "6px" }}>{label}</Label>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", color: file ? C.accentText : C.textDim }}>
+        {file ? file.name : "drop or click"}
+      </div>
+      {file && <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: isPdf ? C.accent : C.textDim, marginTop: "3px" }}>{isPdf ? "PDF · native parse" : "plain text"}</div>}
     </div>
   );
 }
 
-// ── Results View ──────────────────────────────────────────────────────────────
+// ── Readiness Meter ───────────────────────────────────────────────────────────
+
+function ReadinessMeter({ score }) {
+  const [val, setVal] = useState(0);
+  useEffect(() => { const t = setTimeout(() => setVal(score), 250); return () => clearTimeout(t); }, [score]);
+  const color = score >= 70 ? C.greenText : score >= 40 ? C.yellow : C.red;
+  const label = score >= 70 ? "strong match" : score >= 40 ? "partial match" : "needs development";
+  return (
+    <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "8px", padding: "18px 20px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "20px" }}>
+      <div style={{ minWidth: "80px" }}>
+        <Label style={{ marginBottom: "6px" }}>readiness score</Label>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "38px", fontWeight: 700, color, lineHeight: 1, letterSpacing: "-0.03em" }}>
+          {val}<span style={{ fontSize: "14px", color: C.textDim, fontWeight: 400 }}>/100</span>
+        </div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color, marginTop: "4px" }}>{label}</div>
+      </div>
+      <div style={{ flex: 1 }}>
+        <div style={{ height: "4px", background: C.border, borderRadius: "999px", overflow: "hidden", marginBottom: "10px" }}>
+          <div style={{ height: "100%", width: `${val}%`, background: color, borderRadius: "999px", transition: "width 1.1s cubic-bezier(0.4,0,0.2,1)" }} />
+        </div>
+        <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
+          {/* placeholder skill pills shown in meter */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Module row ────────────────────────────────────────────────────────────────
+
+function ModuleRow({ mod, isLast }) {
+  return (
+    <div style={{ display: "flex", alignItems: "flex-start", gap: "10px", padding: "10px 0", borderBottom: isLast ? "none" : `1px solid ${C.border}` }}>
+      <TypeBadge type={mod.type} />
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: "12px", fontWeight: 500, color: C.text, marginBottom: "3px" }}>{mod.name}</div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textDim, lineHeight: 1.6 }}>{mod.description}</div>
+      </div>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textFaint, flexShrink: 0 }}>{mod.estimatedHours}h</div>
+    </div>
+  );
+}
+
+// ── Phase card ────────────────────────────────────────────────────────────────
+
+function PhaseCard({ phase, defaultOpen }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const totalH = phase.modules.reduce((s, m) => s + m.estimatedHours, 0);
+  return (
+    <div style={{ background: C.surface, border: `1px solid ${open ? C.borderHover : C.border}`, borderRadius: "8px", overflow: "hidden", marginBottom: "6px", transition: "border-color 0.15s" }}>
+      <div onClick={() => setOpen(!open)} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px", cursor: "pointer", background: open ? C.surfaceHover : "transparent", transition: "background 0.15s" }}>
+        <div style={{ width: "22px", height: "22px", borderRadius: "50%", background: open ? C.accent : C.border, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: open ? "#fff" : C.textDim, fontWeight: 600, transition: "all 0.15s", flexShrink: 0 }}>{phase.phase}</div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: "13px", fontWeight: 600, color: open ? C.text : C.textMid }}>{phase.title}</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.textDim, marginTop: "2px" }}>{phase.duration} · {totalH}h · {phase.modules.length} modules</div>
+        </div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textFaint, transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "none" }}>▼</div>
+      </div>
+      {open && (
+        <div style={{ padding: "0 16px 4px", borderTop: `1px solid ${C.border}` }}>
+          {phase.modules.map((m, i) => <ModuleRow key={i} mod={m} isLast={i === phase.modules.length - 1} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Results view ──────────────────────────────────────────────────────────────
 
 function ResultsView({ result, onReset, isDemo }) {
   const [tab, setTab] = useState("pathway");
-  const fade = useFadeIn([result]);
   return (
-    <div style={fade}>
+    <div style={{ animation: "fadeUp 0.3s ease both" }}>
       {isDemo && (
-        <div style={{ background: "#0d0d0d", border: "1px solid #f5c84220", borderRadius: "8px", padding: "10px 16px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "10px" }}>
-          <span style={{ fontSize: "14px" }}>⚡</span>
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#f5c842" }}>Demo mode — showing sample analysis for Alex Chen → Senior PM</span>
-          <button onClick={onReset} style={{ marginLeft: "auto", background: "none", border: "1px solid #2a2a2a", borderRadius: "6px", padding: "4px 10px", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#555" }}>Try real →</button>
+        <div style={{ background: `${C.accent}12`, border: `1px solid ${C.accentBorder}`, borderRadius: "7px", padding: "9px 14px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.green, flexShrink: 0 }} />
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.accentText }}>demo mode — sample output for Alex Chen → Senior PM</span>
+          <button onClick={onReset} style={{ marginLeft: "auto", background: "none", border: `1px solid ${C.border}`, borderRadius: "5px", padding: "3px 9px", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.textDim }}>try real →</button>
         </div>
       )}
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+      {/* Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
         <div>
-          <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "20px", color: "#eee", letterSpacing: "-0.02em" }}>
-            {result.candidateName} <span style={{ color: "#2a2a2a" }}>→</span> <span style={{ color: "#c8f542" }}>{result.targetRole}</span>
-          </div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", marginTop: "3px" }}>
-            Competency in <span style={{ color: "#aaa" }}>{result.timeToCompetency}</span>
-          </div>
+          <Label style={{ marginBottom: "6px" }}>analysis complete</Label>
+          <div style={{ fontSize: "18px", fontWeight: 700, color: C.text, letterSpacing: "-0.02em" }}>{result.candidateName}</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: C.textDim, marginTop: "3px" }}>→ {result.targetRole}</div>
         </div>
-        {!isDemo && (
-          <button onClick={onReset} style={{ background: "none", border: "1px solid #1e1e1e", borderRadius: "8px", padding: "7px 13px", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", transition: "border-color 0.15s" }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = "#333"}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = "#1e1e1e"}>
-            ← New
-          </button>
-        )}
+        <div style={{ textAlign: "right" }}>
+          <Label style={{ marginBottom: "6px" }}>competency in</Label>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "14px", color: C.accent, fontWeight: 500 }}>{result.timeToCompetency}</div>
+          {!isDemo && (
+            <button onClick={onReset} style={{ marginTop: "8px", display: "block", marginLeft: "auto", background: "none", border: `1px solid ${C.border}`, borderRadius: "5px", padding: "4px 10px", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.textDim, transition: "border-color 0.15s" }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = C.borderHover}
+              onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
+              ← new analysis
+            </button>
+          )}
+        </div>
       </div>
 
       <ReadinessMeter score={result.readinessScore} />
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: "2px", marginBottom: "16px", background: "#0a0a0a", border: "1px solid #1a1a1a", borderRadius: "10px", padding: "3px" }}>
-        {[["pathway", "Pathway"], ["gaps", `Gaps (${result.gaps?.length})`], ["strengths", "Strengths"]].map(([id, label]) => (
-          <button key={id} onClick={() => setTab(id)} style={{ flex: 1, padding: "7px", borderRadius: "7px", border: "none", cursor: "pointer", background: tab === id ? "#141414" : "transparent", color: tab === id ? "#c8f542" : "#444", fontFamily: "'Space Mono', monospace", fontSize: "10px", fontWeight: tab === id ? 700 : 400, transition: "all 0.15s", letterSpacing: "0.03em" }}>
+      <div style={{ display: "flex", borderBottom: `1px solid ${C.border}`, marginBottom: "16px" }}>
+        {[["pathway", "pathway"], ["gaps", `gaps (${result.gaps?.length})`], ["strengths", "strengths"]].map(([id, label]) => (
+          <button key={id} onClick={() => setTab(id)} style={{ padding: "8px 14px", border: "none", background: "none", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: tab === id ? C.text : C.textDim, borderBottom: `2px solid ${tab === id ? C.accent : "transparent"}`, marginBottom: "-1px", transition: "all 0.15s" }}>
             {label}
           </button>
         ))}
       </div>
 
       {tab === "pathway" && (
-        <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "22px" }}>
-          <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "14px", color: "#888", letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "18px" }}>Training Roadmap</div>
-          {result.pathway?.map((p, i) => <PhaseBlock key={i} phase={p} isLast={i === result.pathway.length - 1} defaultOpen={i === 0} />)}
-        </div>
+        <div>{result.pathway?.map((p, i) => <PhaseCard key={i} phase={p} defaultOpen={i === 0} />)}</div>
       )}
 
       {tab === "gaps" && (
-        <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "22px" }}>
-          <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "14px", color: "#888", letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "16px" }}>Skill Gaps to Close</div>
-          {result.gaps?.map((g, i) => {
-            const col = { critical: "#f54242", important: "#f5c842", "nice-to-have": "#333" }[g.importance];
-            return (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 0", borderBottom: i < result.gaps.length - 1 ? "1px solid #111" : "none", animation: `fadeUp 0.25s ease ${i * 0.05}s both` }}>
-                <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: col, flexShrink: 0 }} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "13px", color: "#ddd" }}>{g.skill}</div>
-                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#3a3a3a", marginTop: "2px" }}>
-                    {g.currentLevel === "none" ? "Not on resume" : `${g.currentLevel}`} → {g.targetLevel}
-                  </div>
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "8px", overflow: "hidden" }}>
+          {result.gaps?.map((g, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px", borderBottom: i < result.gaps.length - 1 ? `1px solid ${C.border}` : "none", animation: `fadeUp 0.2s ease ${i * 0.04}s both` }}>
+              <ImportanceBadge importance={g.importance} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: "12px", fontWeight: 500, color: C.text }}>{g.skill}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.textDim, marginTop: "2px" }}>
+                  {g.currentLevel === "none" ? "not on resume" : g.currentLevel} → {g.targetLevel}
                 </div>
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "9px", color: col, textTransform: "uppercase", letterSpacing: "0.1em", border: `1px solid ${col}30`, borderRadius: "999px", padding: "2px 7px" }}>{g.importance}</span>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       )}
 
       {tab === "strengths" && (
-        <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "22px" }}>
-          <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "14px", color: "#888", letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "16px" }}>What You Already Bring</div>
-          {result.strengths?.map((s, i) => (
-            <div key={i} style={{ display: "flex", gap: "10px", padding: "10px 0", borderBottom: i < result.strengths.length - 1 ? "1px solid #111" : "none", animation: `fadeUp 0.25s ease ${i * 0.06}s both` }}>
-              <span style={{ color: "#c8f542", flexShrink: 0, marginTop: "1px", fontSize: "12px" }}>✓</span>
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", color: "#555", lineHeight: 1.7 }}>{s}</span>
-            </div>
-          ))}
-          <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #111" }}>
-            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#333", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "10px" }}>Detected Skills</div>
-            <div>{result.resumeSkills?.map((s) => <SkillBadge key={s.skill} skill={s.skill} level={s.level} />)}</div>
+        <div>
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "8px", overflow: "hidden", marginBottom: "16px" }}>
+            {result.strengths?.map((s, i) => (
+              <div key={i} style={{ display: "flex", gap: "12px", padding: "12px 16px", borderBottom: i < result.strengths.length - 1 ? `1px solid ${C.border}` : "none", animation: `fadeUp 0.2s ease ${i * 0.05}s both` }}>
+                <span style={{ color: C.green, flexShrink: 0, fontFamily: "'JetBrains Mono', monospace", fontSize: "11px" }}>✓</span>
+                <span style={{ fontSize: "13px", color: C.textMid, lineHeight: 1.65 }}>{s}</span>
+              </div>
+            ))}
+          </div>
+          <Label style={{ marginBottom: "10px" }}>detected skills</Label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+            {result.resumeSkills?.map(s => (
+              <span key={s.skill} style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "4px 9px", borderRadius: "4px", background: C.surface, border: `1px solid ${C.border}`, fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textMid }}>
+                {s.skill} <LevelBadge level={s.level} />
+              </span>
+            ))}
           </div>
         </div>
       )}
@@ -348,128 +375,126 @@ function ResultsView({ result, onReset, isDemo }) {
   );
 }
 
-// ── Quiz View ─────────────────────────────────────────────────────────────────
+// ── Quiz view ─────────────────────────────────────────────────────────────────
 
 function QuizView({ onComplete, onBack }) {
   const [step, setStep] = useState("setup");
   const [jdText, setJdText] = useState("");
   const [name, setName] = useState("");
-  const [quizData, setQuizData] = useState(null);
+  const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
-  const [current, setCurrent] = useState(0);
+  const [cur, setCur] = useState(0);
   const [error, setError] = useState(null);
-  const fade = useFadeIn([step, current]);
+  const [loadMsg, setLoadMsg] = useState("");
 
-  const startQuiz = async () => {
+  const start = async () => {
     if (!jdText.trim()) return;
-    setStep("loading"); setError(null);
-    try { const d = await callClaude(QUIZ_SYSTEM_PROMPT, `Generate diagnostic for: ${jdText}`); setQuizData(d); setAnswers({}); setCurrent(0); setStep("questions"); }
+    setStep("loading"); setLoadMsg("generating diagnostic…"); setError(null);
+    try { const d = await callClaude(QUIZ_PROMPT, `Role/JD: ${jdText}`); setQuiz(d); setAnswers({}); setCur(0); setStep("questions"); }
     catch (e) { setError(e.message); setStep("setup"); }
   };
 
   const pick = (qi, oi) => {
-    setAnswers((a) => ({ ...a, [qi]: oi }));
-    if (qi < quizData.questions.length - 1) setTimeout(() => setCurrent(qi + 1), 350);
+    setAnswers(a => ({ ...a, [qi]: oi }));
+    if (qi < quiz.questions.length - 1) setTimeout(() => setCur(qi + 1), 300);
   };
 
   const submit = async () => {
-    setStep("loading"); setError(null);
+    setStep("loading"); setLoadMsg("building your pathway…");
     try {
-      const summary = quizData.questions.map((q, i) => {
-        const opt = q.options[answers[i]];
-        return `${q.skill}: ${opt?.label} (${opt?.level})`;
-      }).join("\n");
-      const data = await callClaude(ANALYSIS_SYSTEM_PROMPT, `Candidate: ${name || "New Hire"}\nRole: ${quizData.role}\n\nQuiz answers:\n${summary}\n\nGenerate pathway JSON.`);
+      const summary = quiz.questions.map((q, i) => { const o = q.options[answers[i]]; return `${q.skill}: ${o?.label} (${o?.level})`; }).join("\n");
+      const data = await callClaude(ANALYSIS_PROMPT, `Candidate: ${name || "New Hire"}\nRole: ${quiz.role}\n\nQuiz results:\n${summary}`);
       onComplete(data);
     } catch (e) { setError(e.message); setStep("questions"); }
   };
 
-  const allAnswered = quizData && Object.keys(answers).length === quizData.questions.length;
+  const allDone = quiz && Object.keys(answers).length === quiz.questions.length;
+  const inputStyle = { width: "100%", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "6px", padding: "9px 12px", color: C.text, fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", outline: "none" };
 
-  if (step === "loading") return (
-    <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "60px 28px", textAlign: "center" }}>
-      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "16px", color: "#eee", marginBottom: "6px" }}>{quizData ? "Generating Your Pathway…" : "Building Diagnostic…"}</div>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", marginBottom: "28px" }}>{quizData ? "Mapping answers to a personalized roadmap" : "Crafting role-specific questions"}</div>
-      <Spinner />
-    </div>
-  );
+  if (step === "loading") return <Spinner label={loadMsg} />;
 
   if (step === "setup") return (
-    <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "28px", ...useFadeIn() }}>
-      <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", padding: 0, marginBottom: "20px", display: "flex", alignItems: "center", gap: "4px" }}>← back</button>
-      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "19px", color: "#eee", marginBottom: "6px" }}>Diagnostic Quiz</div>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", lineHeight: 1.8, marginBottom: "24px" }}>No resume needed. Describe the target role and answer 8 smart questions — we'll map your skills and generate your pathway.</div>
+    <div style={{ animation: "fadeUp 0.3s ease both" }}>
+      <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textDim, padding: 0, marginBottom: "24px" }}>← back</button>
+      <Label style={{ marginBottom: "8px" }}>diagnostic quiz</Label>
+      <div style={{ fontSize: "18px", fontWeight: 700, color: C.text, letterSpacing: "-0.02em", marginBottom: "6px" }}>No resume needed.</div>
+      <div style={{ fontSize: "13px", color: C.textDim, lineHeight: 1.7, marginBottom: "24px" }}>Describe the target role. Answer 8 adaptive questions. Get a personalised pathway.</div>
+
       <div style={{ marginBottom: "12px" }}>
-        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#333", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Your name (optional)</div>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Priya Sharma" style={{ width: "100%", background: "#0a0a0a", border: "1px solid #1e1e1e", borderRadius: "8px", padding: "10px 13px", color: "#ccc", fontFamily: "'Space Mono', monospace", fontSize: "11px", outline: "none" }} />
+        <Label style={{ marginBottom: "6px" }}>candidate name (optional)</Label>
+        <input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Priya Sharma" style={inputStyle} />
       </div>
       <div style={{ marginBottom: "20px" }}>
-        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#333", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Target role / job description</div>
-        <textarea value={jdText} onChange={(e) => setJdText(e.target.value)} placeholder={'e.g. "Senior Data Engineer at a fintech company" or paste the full JD…'} style={{ width: "100%", minHeight: "130px", background: "#0a0a0a", border: "1px solid #1e1e1e", borderRadius: "8px", padding: "12px 13px", color: "#ccc", fontFamily: "'Space Mono', monospace", fontSize: "11px", lineHeight: 1.7, outline: "none", resize: "vertical" }} />
+        <Label style={{ marginBottom: "6px" }}>target role / job description</Label>
+        <textarea value={jdText} onChange={e => setJdText(e.target.value)} placeholder={`"Senior Data Engineer at a fintech startup" — or paste the full JD`} style={{ ...inputStyle, minHeight: "110px", resize: "vertical", lineHeight: 1.6 }} />
       </div>
-      {error && <div style={{ background: "#150505", border: "1px solid #f5424230", borderRadius: "8px", padding: "10px 14px", marginBottom: "14px", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#f54242" }}>⚠ {error}</div>}
-      <button onClick={startQuiz} disabled={!jdText.trim()} style={{ width: "100%", padding: "13px", borderRadius: "9px", background: jdText.trim() ? "#c8f542" : "#111", color: jdText.trim() ? "#000" : "#2a2a2a", border: "none", cursor: jdText.trim() ? "pointer" : "not-allowed", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "13px", transition: "all 0.2s" }}>
-        Generate My Diagnostic →
+
+      {error && <div style={{ background: C.redBg, border: `1px solid ${C.redBorder}`, borderRadius: "6px", padding: "9px 12px", marginBottom: "12px", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.red }}>error: {error}</div>}
+
+      <button onClick={start} disabled={!jdText.trim()} style={{ width: "100%", padding: "11px", borderRadius: "6px", background: jdText.trim() ? C.accent : C.border, color: jdText.trim() ? "#fff" : C.textDim, border: "none", cursor: jdText.trim() ? "pointer" : "not-allowed", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 500, letterSpacing: "0.02em", transition: "all 0.2s" }}>
+        generate diagnostic →
       </button>
     </div>
   );
 
-  if (step === "questions" && quizData) {
-    const q = quizData.questions[current];
-    const levelCol = { none: "#333", beginner: "#6b7280", intermediate: "#f5c842", expert: "#c8f542" };
+  if (step === "questions" && quiz) {
+    const q = quiz.questions[cur];
+    const levelStyle = {
+      none:         { color: C.textDim,   bg: C.bg,      border: C.border,       sel_border: C.borderHover },
+      beginner:     { color: C.textMid,   bg: C.surface, border: C.border,       sel_border: C.borderHover },
+      intermediate: { color: C.yellow,    bg: C.yellowBg,border: C.yellowBorder, sel_border: "#FCD34D"     },
+      expert:       { color: C.greenText, bg: C.greenBg, border: C.greenBorder,  sel_border: "#86EFAC"     },
+    };
     return (
-      <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "24px", ...fade }}>
-        {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-          <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "13px", color: "#555" }}>{quizData.role}</div>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#333" }}>{Object.keys(answers).length}/{quizData.questions.length} answered</div>
+      <div style={{ animation: "fadeUp 0.2s ease both" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+          <Label>{quiz.role}</Label>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textDim }}>{Object.keys(answers).length}/{quiz.questions.length} answered</span>
         </div>
-        {/* Progress */}
-        <div style={{ height: "2px", background: "#111", borderRadius: "999px", overflow: "hidden", marginBottom: "24px" }}>
-          <div style={{ height: "100%", width: `${((current + 1) / quizData.questions.length) * 100}%`, background: "#c8f542", transition: "width 0.4s ease" }} />
+        <div style={{ height: "2px", background: C.border, borderRadius: "999px", overflow: "hidden", marginBottom: "22px" }}>
+          <div style={{ height: "100%", width: `${((cur + 1) / quiz.questions.length) * 100}%`, background: C.accent, borderRadius: "999px", transition: "width 0.3s ease" }} />
         </div>
-        {/* Skill pill */}
-        <div style={{ display: "inline-block", padding: "3px 9px", background: "#c8f54210", border: "1px solid #c8f54230", borderRadius: "999px", fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#c8f542", letterSpacing: "0.08em", marginBottom: "12px" }}>{q.skill}</div>
-        {/* Question */}
-        <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "16px", color: "#eee", lineHeight: 1.55, marginBottom: "20px" }}>{q.question}</div>
-        {/* Options */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "24px" }}>
+
+        <div style={{ marginBottom: "8px" }}><Badge color={C.greenText} bg={C.greenBg} border={C.greenBorder}>{q.skill}</Badge></div>
+        <div style={{ fontSize: "14px", fontWeight: 600, color: C.text, lineHeight: 1.55, marginBottom: "18px" }}>{q.question}</div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "7px", marginBottom: "20px" }}>
           {q.options.map((opt, oi) => {
-            const sel = answers[current] === oi;
-            const col = levelCol[opt.level] || "#333";
+            const sel = answers[cur] === oi;
+            const ls = levelStyle[opt.level] || levelStyle.none;
             return (
-              <button key={oi} onClick={() => pick(current, oi)} style={{ textAlign: "left", padding: "12px 14px", borderRadius: "9px", border: `1px solid ${sel ? col : "#1a1a1a"}`, background: sel ? `${col}12` : "#0a0a0a", cursor: "pointer", transition: "all 0.15s", display: "flex", alignItems: "center", gap: "10px" }}>
-                <div style={{ width: "16px", height: "16px", borderRadius: "50%", border: `2px solid ${sel ? col : "#222"}`, background: sel ? col : "transparent", flexShrink: 0, transition: "all 0.15s" }} />
-                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", color: sel ? "#ddd" : "#555", lineHeight: 1.5 }}>{opt.label}</span>
-                {sel && <span style={{ marginLeft: "auto", fontFamily: "'Space Mono', monospace", fontSize: "9px", color: col, letterSpacing: "0.06em" }}>{opt.level}</span>}
+              <button key={oi} onClick={() => pick(cur, oi)} style={{ textAlign: "left", padding: "11px 13px", borderRadius: "6px", border: `1px solid ${sel ? ls.sel_border : C.border}`, background: sel ? ls.bg : C.surface, cursor: "pointer", transition: "all 0.13s", display: "flex", alignItems: "center", gap: "10px" }}>
+                <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: `2px solid ${sel ? ls.color : C.borderHover}`, background: sel ? ls.color : "transparent", flexShrink: 0, transition: "all 0.13s" }} />
+                <span style={{ fontSize: "12px", color: sel ? C.text : C.textDim, flex: 1 }}>{opt.label}</span>
+                {sel && <Badge color={ls.color} bg="transparent" border="transparent">{opt.level}</Badge>}
               </button>
             );
           })}
         </div>
-        {/* Nav */}
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          {current > 0 && <button onClick={() => setCurrent(current - 1)} style={{ padding: "9px 14px", borderRadius: "8px", border: "1px solid #1a1a1a", background: "transparent", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444" }}>←</button>}
-          {current < quizData.questions.length - 1
-            ? <button onClick={() => setCurrent(current + 1)} disabled={answers[current] === undefined} style={{ flex: 1, padding: "9px", borderRadius: "8px", border: "none", background: answers[current] !== undefined ? "#141414" : "#0a0a0a", cursor: answers[current] !== undefined ? "pointer" : "not-allowed", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: answers[current] !== undefined ? "#666" : "#222" }}>Next →</button>
-            : <button onClick={submit} disabled={!allAnswered} style={{ flex: 1, padding: "11px", borderRadius: "8px", border: "none", background: allAnswered ? "#c8f542" : "#111", color: allAnswered ? "#000" : "#2a2a2a", cursor: allAnswered ? "pointer" : "not-allowed", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "13px", transition: "all 0.2s" }}>
-                {allAnswered ? "Generate My Pathway →" : `${Object.keys(answers).length}/${quizData.questions.length} answered`}
+
+        <div style={{ display: "flex", gap: "7px" }}>
+          {cur > 0 && <button onClick={() => setCur(cur - 1)} style={{ padding: "9px 13px", borderRadius: "6px", border: `1px solid ${C.border}`, background: "none", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textDim }}>←</button>}
+          {cur < quiz.questions.length - 1
+            ? <button onClick={() => setCur(cur + 1)} disabled={answers[cur] === undefined} style={{ flex: 1, padding: "9px", borderRadius: "6px", border: `1px solid ${C.border}`, background: "none", cursor: answers[cur] !== undefined ? "pointer" : "not-allowed", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: answers[cur] !== undefined ? C.textMid : C.textDim }}>next →</button>
+            : <button onClick={submit} disabled={!allDone} style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "none", background: allDone ? C.accent : C.border, color: allDone ? "#fff" : C.textDim, cursor: allDone ? "pointer" : "not-allowed", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 500, transition: "all 0.2s" }}>
+                {allDone ? "generate pathway →" : `${Object.keys(answers).length}/${quiz.questions.length} answered`}
               </button>
           }
         </div>
-        {/* Dots */}
+
         <div style={{ display: "flex", justifyContent: "center", gap: "5px", marginTop: "18px" }}>
-          {quizData.questions.map((_, i) => (
-            <div key={i} onClick={() => setCurrent(i)} style={{ width: "5px", height: "5px", borderRadius: "50%", cursor: "pointer", transition: "all 0.15s", background: i === current ? "#c8f542" : answers[i] !== undefined ? "#2a3a1a" : "#1a1a1a", transform: i === current ? "scale(1.3)" : "scale(1)" }} />
+          {quiz.questions.map((_, i) => (
+            <div key={i} onClick={() => setCur(i)} style={{ width: "5px", height: "5px", borderRadius: "50%", cursor: "pointer", background: i === cur ? C.accent : answers[i] !== undefined ? C.borderHover : C.border, transition: "all 0.15s", transform: i === cur ? "scale(1.4)" : "scale(1)" }} />
           ))}
         </div>
-        {error && <div style={{ marginTop: "14px", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#f54242" }}>⚠ {error}</div>}
+        {error && <div style={{ marginTop: "12px", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.red }}>error: {error}</div>}
       </div>
     );
   }
   return null;
 }
 
-// ── Upload View ───────────────────────────────────────────────────────────────
+// ── Upload view ───────────────────────────────────────────────────────────────
 
 function UploadView({ onComplete }) {
   const [resumeFile, setResumeFile] = useState(null);
@@ -479,9 +504,7 @@ function UploadView({ onComplete }) {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
   const [error, setError] = useState(null);
-  const fade = useFadeIn([]);
-
-  const msgs = ["Parsing your resume…", "Extracting requirements…", "Computing skill gaps…", "Building your pathway…"];
+  const msgs = ["parsing resume…", "extracting requirements…", "computing skill gaps…", "generating pathway…"];
   const canGo = resumeFile && (jdFile || jdText.trim());
 
   const analyze = useCallback(async () => {
@@ -489,79 +512,87 @@ function UploadView({ onComplete }) {
     setLoading(true); setError(null); setMsg(msgs[0]);
     let i = 0; const iv = setInterval(() => { i = (i + 1) % msgs.length; setMsg(msgs[i]); }, 1800);
     try {
-      const rb = await fileToContentBlock(resumeFile, "RESUME");
-      const jb = useText ? { type: "text", text: `JOB DESCRIPTION:\n${jdText}` } : await fileToContentBlock(jdFile, "JOB DESCRIPTION");
-      const data = await callClaude(ANALYSIS_SYSTEM_PROMPT, [rb, jb, { type: "text", text: "Return only the JSON." }]);
+      const rb = await fileToBlock(resumeFile, "RESUME");
+      const jb = useText ? { type: "text", text: `JOB DESCRIPTION:\n${jdText}` } : await fileToBlock(jdFile, "JOB DESCRIPTION");
+      const data = await callClaude(ANALYSIS_PROMPT, [rb, jb, { type: "text", text: "Return only the JSON." }]);
       onComplete(data);
-    } catch (e) { setError(e.message || "Something went wrong."); }
+    } catch (e) { setError(e.message || "analysis failed."); }
     finally { clearInterval(iv); setLoading(false); }
   }, [resumeFile, jdFile, jdText, useText]);
 
-  return (
-    <div style={{ background: "#0d0d0d", border: "1px solid #1c1c1c", borderRadius: "14px", padding: "28px", ...fade }}>
-      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "19px", color: "#eee", marginBottom: "4px" }}>Upload Resume + JD</div>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#333", marginBottom: "22px" }}>PDF and .txt supported · PDFs parsed natively</div>
+  if (loading) return <Spinner label={msg} />;
 
-      <div style={{ display: "flex", gap: "10px", marginBottom: "14px" }}>
-        <DropZone label="Resume" icon="📄" file={resumeFile} onFile={setResumeFile} />
-        {!useText && <DropZone label="Job Description" icon="💼" file={jdFile} onFile={setJdFile} />}
+  return (
+    <div style={{ animation: "fadeUp 0.3s ease both" }}>
+      <Label style={{ marginBottom: "8px" }}>upload documents</Label>
+      <div style={{ fontSize: "18px", fontWeight: 700, color: C.text, letterSpacing: "-0.02em", marginBottom: "6px" }}>Resume + Job Description</div>
+      <div style={{ fontSize: "13px", color: C.textDim, lineHeight: 1.7, marginBottom: "22px" }}>Upload both files. The engine extracts your skills, computes the gap, and generates a sequenced training roadmap.</div>
+
+      <div style={{ display: "flex", gap: "10px", marginBottom: "12px" }}>
+        <DropZone label="resume.pdf / .txt" file={resumeFile} onFile={setResumeFile} />
+        {!useText && <DropZone label="job_description" file={jdFile} onFile={setJdFile} />}
       </div>
 
-      <button onClick={() => { setUseText(!useText); setJdFile(null); setJdText(""); }} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: useText ? "#c8f542" : "#333", padding: 0, marginBottom: "12px", textDecoration: "underline" }}>
-        {useText ? "← upload JD file" : "paste JD as text →"}
+      <button onClick={() => { setUseText(!useText); setJdFile(null); setJdText(""); }} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: useText ? C.accent : C.textDim, padding: 0, marginBottom: "12px", textDecoration: "underline" }}>
+        {useText ? "← upload jd file" : "paste jd as text →"}
       </button>
 
-      {useText && <textarea value={jdText} onChange={(e) => setJdText(e.target.value)} placeholder="Paste the job description…" style={{ width: "100%", minHeight: "120px", background: "#0a0a0a", border: "1px solid #1a1a1a", borderRadius: "8px", padding: "12px", color: "#ccc", fontFamily: "'Space Mono', monospace", fontSize: "11px", lineHeight: 1.7, outline: "none", resize: "vertical", marginBottom: "14px" }} />}
+      {useText && <textarea value={jdText} onChange={e => setJdText(e.target.value)} placeholder="paste the full job description…" style={{ width: "100%", minHeight: "110px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "6px", padding: "11px 12px", color: C.text, fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", lineHeight: 1.6, outline: "none", resize: "vertical", marginBottom: "12px" }} />}
 
-      {error && <div style={{ background: "#150505", border: "1px solid #f5424230", borderRadius: "8px", padding: "10px 14px", marginBottom: "14px", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#f54242" }}>⚠ {error}</div>}
+      {error && <div style={{ background: C.redBg, border: `1px solid ${C.redBorder}`, borderRadius: "6px", padding: "9px 12px", marginBottom: "12px", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.red }}>error: {error}</div>}
 
-      <button onClick={analyze} disabled={!canGo || loading} style={{ width: "100%", padding: "13px", borderRadius: "9px", background: canGo && !loading ? "#c8f542" : "#111", color: canGo && !loading ? "#000" : "#2a2a2a", border: "none", cursor: canGo && !loading ? "pointer" : "not-allowed", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "13px", transition: "all 0.2s" }}>
-        {loading ? msg : "Generate Pathway →"}
+      <button onClick={analyze} disabled={!canGo} style={{ width: "100%", padding: "11px", borderRadius: "6px", background: canGo ? C.accent : C.border, color: canGo ? "#fff" : C.textDim, border: "none", cursor: canGo ? "pointer" : "not-allowed", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 500, letterSpacing: "0.02em", transition: "all 0.2s" }}>
+        run analysis →
       </button>
     </div>
   );
 }
 
-// ── Landing ───────────────────────────────────────────────────────────────────
+// ── Landing view ──────────────────────────────────────────────────────────────
 
 function LandingView({ onMode, onDemo }) {
-  const fade = useFadeIn([]);
   return (
-    <div style={fade}>
-      <div style={{ textAlign: "center", padding: "36px 0 28px" }}>
-        <div style={{ display: "inline-block", padding: "4px 12px", background: "#c8f54210", border: "1px solid #c8f54225", borderRadius: "999px", fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#c8f542", letterSpacing: "0.1em", marginBottom: "18px" }}>
-          ADAPTIVE ONBOARDING ENGINE
+    <div style={{ animation: "fadeUp 0.3s ease both" }}>
+      <div style={{ paddingTop: "48px", paddingBottom: "36px" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "3px 10px", borderRadius: "4px", background: `${C.accent}15`, border: `1px solid ${C.accentBorder}`, marginBottom: "18px" }}>
+          <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: C.green }} />
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.accentText, letterSpacing: "0.08em" }}>adaptive onboarding engine · v1.0</span>
         </div>
-        <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "30px", color: "#eee", letterSpacing: "-0.03em", lineHeight: 1.2, marginBottom: "12px" }}>
-          Your personalized<br /><span style={{ color: "#c8f542" }}>learning pathway</span>
-        </div>
-        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", color: "#444", lineHeight: 1.8, maxWidth: "400px", margin: "0 auto 28px" }}>
-          Stop wasting time on what you already know. Get a roadmap built exactly for your skill gap.
-        </div>
-        {/* Demo CTA */}
-        <button onClick={onDemo} style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "10px 20px", borderRadius: "999px", border: "1px solid #f5c84240", background: "#f5c84208", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "11px", color: "#f5c842", transition: "all 0.2s", marginBottom: "8px" }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = "#f5c84215"; e.currentTarget.style.borderColor = "#f5c84270"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = "#f5c84208"; e.currentTarget.style.borderColor = "#f5c84240"; }}>
-          <span style={{ fontSize: "14px" }}>⚡</span> Try Demo — see a sample result instantly
+        <h1 style={{ fontSize: "28px", fontWeight: 700, color: C.text, letterSpacing: "-0.03em", lineHeight: 1.2, marginBottom: "12px" }}>
+          Personalised learning<br />pathways. At hire time.
+        </h1>
+        <p style={{ fontSize: "13px", color: C.textDim, lineHeight: 1.75, maxWidth: "420px", marginBottom: "24px" }}>
+          Parses your existing skills. Maps the gap to the role. Generates a sequenced training roadmap that skips what you already know.
+        </p>
+        <button onClick={onDemo} style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 16px", borderRadius: "6px", border: `1px solid ${C.border}`, background: C.surface, cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: C.textMid, transition: "all 0.15s" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = C.borderHover; e.currentTarget.style.color = C.text; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textMid; }}>
+          <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: C.green }} />
+          view demo output →
         </button>
       </div>
 
-      <div style={{ display: "flex", gap: "12px" }}>
+      <Divider style={{ marginBottom: "28px" }} />
+
+      <div style={{ display: "flex", gap: "10px" }}>
         {[
-          { mode: "upload", icon: "📄", title: "Upload Resume + JD", desc: "Have a resume? Upload it with the JD for automatic skill extraction and gap analysis.", tags: ["PDF support", "Auto parsing", "Instant gaps"], accent: "#c8f542" },
-          { mode: "quiz", icon: "🧠", title: "Take Diagnostic Quiz", desc: "No resume? Answer 8 adaptive questions and get a pathway tailored to your actual skill level.", tags: ["No resume needed", "Role-specific", "Adaptive"], accent: "#6c8ef5" },
-        ].map(({ mode, icon, title, desc, tags, accent }) => (
+          { mode: "upload", id: "01", accent: C.accent, accentText: C.accentText, title: "Upload Resume + JD", desc: "Have a resume? Upload it alongside the job description for automatic skill extraction and gap analysis.", tags: ["PDF support", "native parsing", "instant gaps"] },
+          { mode: "quiz",   id: "02", accent: "#8B5CF6", accentText: C.purple,    title: "Diagnostic Quiz",   desc: "No resume? Answer 8 adaptive questions tailored to your target role. We infer skill level and build the pathway.", tags: ["no resume needed", "8 questions", "adaptive scoring"] },
+        ].map(({ mode, id, accent, accentText, title, desc, tags }) => (
           <div key={mode} onClick={() => onMode(mode)}
-            style={{ flex: 1, background: "#0d0d0d", border: "1px solid #1a1a1a", borderRadius: "14px", padding: "24px", cursor: "pointer", transition: "all 0.2s", position: "relative", overflow: "hidden" }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = accent + "60"; e.currentTarget.style.background = accent + "05"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#1a1a1a"; e.currentTarget.style.background = "#0d0d0d"; }}>
-            <div style={{ fontSize: "28px", marginBottom: "14px" }}>{icon}</div>
-            <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "15px", color: "#eee", marginBottom: "8px" }}>{title}</div>
-            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: "#444", lineHeight: 1.75, marginBottom: "16px" }}>{desc}</div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
-              {tags.map((t) => <span key={t} style={{ padding: "2px 8px", borderRadius: "999px", border: "1px solid #1e1e1e", fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#333", letterSpacing: "0.04em" }}>{t}</span>)}
+            style={{ flex: 1, background: C.surface, border: `1px solid ${C.border}`, borderRadius: "8px", padding: "20px", cursor: "pointer", transition: "border-color 0.15s", position: "relative" }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = C.borderHover}
+            onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "12px" }}>
+              <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: accent }} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: accentText }}>{id} / {mode}</span>
             </div>
-            <div style={{ position: "absolute", bottom: "18px", right: "18px", fontFamily: "'Space Mono', monospace", fontSize: "10px", color: accent + "80" }}>→</div>
+            <div style={{ fontSize: "13px", fontWeight: 600, color: C.text, marginBottom: "8px" }}>{title}</div>
+            <div style={{ fontSize: "12px", color: C.textDim, lineHeight: 1.7, marginBottom: "14px" }}>{desc}</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+              {tags.map(t => <Badge key={t} color={C.textDim} bg={C.bg} border={C.border}>{t}</Badge>)}
+            </div>
+            <div style={{ position: "absolute", bottom: "18px", right: "18px", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", color: C.borderHover }}>→</div>
           </div>
         ))}
       </div>
@@ -576,59 +607,60 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [isDemo, setIsDemo] = useState(false);
 
-  const handleComplete = (data) => { setResult(data); setIsDemo(false); setScreen("results"); };
-  const handleDemo = () => { setResult(DEMO_RESULT); setIsDemo(true); setScreen("results"); };
-  const handleReset = () => { setResult(null); setIsDemo(false); setScreen("landing"); };
+  const done  = data => { setResult(data);        setIsDemo(false); setScreen("results"); };
+  const demo  = ()   => { setResult(DEMO_RESULT); setIsDemo(true);  setScreen("results"); };
+  const reset = ()   => { setResult(null);         setIsDemo(false); setScreen("landing"); };
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #080808; color: #eee; }
-        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #0a0a0a; } ::-webkit-scrollbar-thumb { background: #1e1e1e; border-radius: 2px; }
-        textarea, input { color-scheme: dark; }
-        @keyframes pulse { 0%,100%{opacity:.15;transform:scale(.75)} 50%{opacity:1;transform:scale(1)} }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { background: ${C.bg}; color: ${C.text}; min-height: 100vh; }
+        input, textarea { color-scheme: dark; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes dot { 0%,100% { opacity: 0.15; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1); } }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: ${C.border}; border-radius: 2px; }
       `}</style>
 
-      <div style={{ minHeight: "100vh", background: "#080808" }}>
-        {/* Subtle grid background */}
-        <div style={{ position: "fixed", inset: 0, backgroundImage: "linear-gradient(#0f0f0f 1px, transparent 1px), linear-gradient(90deg, #0f0f0f 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none", zIndex: 0 }} />
-
+      <div style={{ minHeight: "100vh", background: C.bg }}>
         {/* Header */}
-        <div style={{ position: "relative", zIndex: 1, borderBottom: "1px solid #111", padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", backdropFilter: "blur(8px)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }} onClick={handleReset}>
-            <div style={{ width: "28px", height: "28px", borderRadius: "7px", background: "#c8f542", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>⚡</div>
-            <div>
-              <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "15px", color: "#eee", letterSpacing: "-0.02em" }}>PathwayAI</div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "8px", color: "#333", letterSpacing: "0.12em", textTransform: "uppercase" }}>Adaptive Onboarding</div>
+        <div style={{ borderBottom: `1px solid ${C.border}`, background: C.bg, padding: "0 24px", position: "sticky", top: 0, zIndex: 10 }}>
+          <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: "48px" }}>
+            <div onClick={reset} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
+              <div style={{ width: "20px", height: "20px", borderRadius: "4px", background: C.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="#fff"><polygon points="5,1 9,5 5,9 1,5"/></svg>
+              </div>
+              <span style={{ fontSize: "13px", fontWeight: 700, color: C.text, letterSpacing: "-0.01em" }}>PathwayAI</span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.accent, background: `${C.accent}15`, border: `1px solid ${C.accentBorder}`, borderRadius: "3px", padding: "1px 5px" }}>v1.0</span>
             </div>
-          </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            {screen !== "landing" && screen !== "results" && (
-              <>
-                {[["upload", "📄 Resume"], ["quiz", "🧠 Quiz"]].map(([m, l]) => (
-                  <button key={m} onClick={() => setScreen(m)} style={{ padding: "5px 12px", borderRadius: "999px", border: `1px solid ${screen === m ? "#c8f54250" : "#1a1a1a"}`, background: screen === m ? "#c8f54210" : "transparent", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "9px", color: screen === m ? "#c8f542" : "#444", transition: "all 0.15s" }}>{l}</button>
-                ))}
-                <div style={{ width: "1px", height: "16px", background: "#1a1a1a", margin: "0 4px" }} />
-              </>
-            )}
-            <button onClick={handleDemo} style={{ padding: "5px 12px", borderRadius: "999px", border: "1px solid #f5c84230", background: "transparent", cursor: "pointer", fontFamily: "'Space Mono', monospace", fontSize: "9px", color: "#f5c84280", transition: "all 0.15s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = "#f5c842"; e.currentTarget.style.borderColor = "#f5c84260"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = "#f5c84280"; e.currentTarget.style.borderColor = "#f5c84230"; }}>
-              ⚡ Demo
-            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              {screen !== "landing" && screen !== "results" && (
+                <>
+                  {[["upload", "upload"], ["quiz", "quiz"]].map(([m, l]) => (
+                    <button key={m} onClick={() => setScreen(m)} style={{ padding: "4px 10px", borderRadius: "5px", border: `1px solid ${screen === m ? C.borderHover : C.border}`, background: screen === m ? C.surface : "none", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: screen === m ? C.text : C.textDim, transition: "all 0.15s" }}>{l}</button>
+                  ))}
+                  <div style={{ width: "1px", height: "14px", background: C.border, margin: "0 2px" }} />
+                </>
+              )}
+              <button onClick={demo} style={{ display: "inline-flex", alignItems: "center", gap: "5px", padding: "4px 10px", borderRadius: "5px", border: `1px solid ${C.border}`, background: "none", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", color: C.textDim, transition: "all 0.15s" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = C.borderHover; e.currentTarget.style.color = C.text; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textDim; }}>
+                <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: C.green }} />
+                demo
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Content */}
-        <div style={{ position: "relative", zIndex: 1, maxWidth: "760px", margin: "0 auto", padding: "28px 20px 60px" }}>
-          {screen === "landing" && <LandingView onMode={setScreen} onDemo={handleDemo} />}
-          {screen === "upload" && <UploadView onComplete={handleComplete} />}
-          {screen === "quiz" && <QuizView onComplete={handleComplete} onBack={() => setScreen("landing")} />}
-          {screen === "results" && <ResultsView result={result} onReset={handleReset} isDemo={isDemo} />}
+        <div style={{ maxWidth: "680px", margin: "0 auto", padding: "0 24px 80px" }}>
+          {screen === "landing"  && <LandingView onMode={setScreen} onDemo={demo} />}
+          {screen === "upload"   && <div style={{ paddingTop: "36px" }}><UploadView  onComplete={done} /></div>}
+          {screen === "quiz"     && <div style={{ paddingTop: "36px" }}><QuizView    onComplete={done} onBack={() => setScreen("landing")} /></div>}
+          {screen === "results"  && <div style={{ paddingTop: "28px" }}><ResultsView result={result} onReset={reset} isDemo={isDemo} /></div>}
         </div>
       </div>
     </>
