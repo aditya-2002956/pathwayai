@@ -120,7 +120,11 @@ const QUIZ_PROMPT = `You are an adaptive skills diagnostic engine. Given a role/
 
 async function callClaude(system, userContent) {
   const content = typeof userContent === "string" ? [{ type: "text", text: userContent }] : userContent;
-  const headers = { "Content-Type": "application/json" };
+  const headers = {
+    "Content-Type": "application/json",
+    "anthropic-version": "2023-06-01",
+    "anthropic-dangerous-direct-browser-access": "true",
+  };
   if (ANTHROPIC_API_KEY) headers["x-api-key"] = ANTHROPIC_API_KEY;
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST", headers,
